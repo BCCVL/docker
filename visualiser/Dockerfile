@@ -6,9 +6,11 @@ RUN yum install -y epel-release
 
 #RUN yum install -y rpm -i http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm
 
-RUN yum install -y gcc make git python python-devel gdal-devel gdal atlas-devel blas-devel lapack-devel \
-    proj proj-devel proj-epsg proj-nad geos geos-devel ogr_fdw94 gcc-c++ libpng libpng-devel freetype-devel giflib \
-    giflib-devel libxml2 libxml2-devel cairo cairo-devel libjpeg-turbo-devel ibjpeg-turbo libcurl-devel python-pip
+RUN yum install -y gcc make git python python-devel gdal-devel gdal atlas-devel blas-devel \ 
+    lapack-devel proj proj-devel proj-epsg proj-nad geos geos-devel ogr_fdw94 gcc-c++ libpng \
+    libpng-devel freetype-devel giflib giflib-devel libxml2 libxml2-devel cairo cairo-devel \
+    libjpeg-turbo-devel ibjpeg-turbo libcurl-devel python-pip openssl libffi libffi-devel cmake \
+    swig harfbuzz harfbuzz-devel fribidi-devel fribidi fcgi fcgi-devel openssl-devel
 
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
