@@ -39,8 +39,8 @@ ENV NTHREADS 2
 
 EXPOSE 10600 9191
 
+RUN mkdir /bccvltmp && chown -R bccvl:bccvl /bccvltmp
 USER bccvl
-VOLUME /bccvltmp
 
 CMD mkdir -p $BCCVL_MAPSCRIPT_MAP_DATA_FILES_ROOT_PATH && \
     mkdir -p $BCCVL_DATA_MOVER_PUBLIC_DIR && \
