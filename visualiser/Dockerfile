@@ -10,20 +10,23 @@ RUN yum install -y gcc make git python python-devel gdal-devel gdal atlas-devel 
     lapack-devel proj proj-devel proj-epsg proj-nad geos geos-devel ogr_fdw94 gcc-c++ libpng \
     libpng-devel freetype-devel giflib giflib-devel libxml2 libxml2-devel cairo cairo-devel \
     libjpeg-turbo-devel ibjpeg-turbo libcurl-devel python-pip openssl libffi libffi-devel cmake \
-    swig harfbuzz harfbuzz-devel fribidi-devel fribidi fcgi fcgi-devel openssl-devel
+    swig harfbuzz harfbuzz-devel fribidi-devel fribidi fcgi fcgi-devel openssl-devel mailcap
 
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
 
+RUN pip install --no-cache numpy==1.10.1 scipy==0.14.0 requests[security]==2.8.1
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade --no-cache -r /tmp/requirements.txt
+
 RUN curl -o /tmp/mapserver-6.2.2.tar.gz http://download.osgeo.org/mapserver/mapserver-6.2.2.tar.gz && \
     cd /tmp/ && tar xvfz mapserver-6.2.2.tar.gz && cd mapserver-6.2.2 && \
-    ./configure --with-wfs --with-wcs --with-proj=yes --with-gdal=yes --with-ogr=yes --with-wmsclient --with-wfsclient --with-jpeg --with-kml && \ 
+    ./configure --with-wfs --with-wcs --with-proj=yes --with-gdal=yes --with-ogr=yes --with-wmsclient --with-wfsclient --with-jpeg --with-kml --with-geos --with-cairo --with-png && \ 
     make && make install && cd /tmp/mapserver-6.2.2/mapscript/python && python setup.py install && cd / && rm -rf /tmp/mapserver-6.2.2
 
 RUN cd / && git clone https://github.com/BCCVL/BCCVL_Visualiser.git /bccvl_visualiser \
-    && cd /bccvl_visualiser && git checkout docker
-RUN cd /bccvl_visualiser/BCCVL_Visualiser && pip install --no-cache -r requirements.txt \
-    && python setup.py install
+    && cd /bccvl_visualiser && git checkout feature/mapscript7 && git pull
+RUN cd /bccvl_visualiser/BCCVL_Visualiser && python setup.py install
 
 RUN pip install --no-cache gunicorn==19.4.1
 
