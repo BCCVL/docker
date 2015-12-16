@@ -26,7 +26,7 @@ RUN cd /tmp && curl http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz |
     && make && make install && cd /tmp && rm -rf mapserver-7.0.0
 
 RUN cd / && git clone https://github.com/BCCVL/BCCVL_Visualiser.git /bccvl_visualiser \
-    && cd /bccvl_visualiser && git checkout feature/mapscript7 && git pull
+    && cd /bccvl_visualiser && git checkout develop && git pull
 RUN cd /bccvl_visualiser/BCCVL_Visualiser && python setup.py install
 
 RUN pip install --no-cache gunicorn==19.4.1
